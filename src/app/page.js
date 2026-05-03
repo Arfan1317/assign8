@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import PopularCourses from "@/components/PopularCourses";
 
 export default function Home() {
   return (
@@ -95,11 +96,12 @@ export default function Home() {
         </div>
       </div>
 
+      <PopularCourses />
+
     </div>
   );
 }
 
-// Custom Smooth Counter Component
 function AnimatedNumber({ end, suffix = "", duration = 2000 }) {
   const [count, setCount] = useState(0);
 
@@ -109,13 +111,11 @@ function AnimatedNumber({ end, suffix = "", duration = 2000 }) {
     let animationFrame;
 
     const animate = (timestamp) => {
-      // If the user leaves the page mid-animation, stop calculating
       if (!isMounted) return; 
       
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
       
-      // Easing function for a natural slow-down effect at the end
       const easeProgress = 1 - Math.pow(1 - progress, 4);
       
       setCount(Math.floor(easeProgress * end));
@@ -123,17 +123,14 @@ function AnimatedNumber({ end, suffix = "", duration = 2000 }) {
       if (progress < 1) {
         animationFrame = requestAnimationFrame(animate);
       } else {
-        setCount(end); // Lock exactly onto the final number to prevent 0
+        setCount(end); 
       }
     };
 
-    // A tiny delay gives Next.js time to finish its route transition
-    // before the browser tries to calculate the animation frames.
     const timeoutId = setTimeout(() => {
       animationFrame = requestAnimationFrame(animate);
     }, 50);
 
-    // Cleanup function to reset everything when leaving the page
     return () => {
       isMounted = false;
       clearTimeout(timeoutId);
