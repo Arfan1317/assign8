@@ -20,7 +20,7 @@ export default function PopularCourses() {
         const popular = coursesData.filter(course => course.isPopular);
         setCourses(popular);
         setIsLoading(false);
-      }, 1500);
+      }, 500);
     };
 
     fetchCourses();
