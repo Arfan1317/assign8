@@ -2,35 +2,29 @@
 import Link from "next/link";
 import { Inter } from "next/font/google";
 
-// Importing the exact modern font to match your design
 const inter = Inter({ subsets: ["latin"] });
 
 export default function LoginPage() {
   return (
     <div className={`min-h-screen flex items-center justify-center bg-[#fafafa] p-4 ${inter.className}`}>
       
-      {/* Card Container - Adjusted padding to reduce overall height */}
       <div className="max-w-md w-full bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 border border-gray-100">
         
-        {/* Header */}
         <div className="flex items-center gap-2 mb-6">
           <img src="/asset/logofooter.png" alt="SkillSphere Logo" className="w-8 h-8 rounded-md" />
           <h1 className="text-xl font-bold text-gray-900">Login</h1>
         </div>
 
-        {/* Welcome Text - Tightened margins */}
         <div className="text-center mb-6">
           <h2 className="text-[26px] font-bold text-gray-900 mb-1.5 tracking-tight">Welcome Back!</h2>
           <p className="text-[15px] text-gray-500 font-medium">Login to continue your learning journey.</p>
         </div>
 
-        {/* Form */}
         <form 
           className="space-y-4" 
           onSubmit={(e) => { e.preventDefault(); }}
         >
           
-          {/* Email Input */}
           <div>
             <label className="block text-sm font-semibold text-gray-800 mb-1.5">
               Email
@@ -38,13 +32,13 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Enter your email"
-              // Pure Tailwind to control exact height and remove bulk
+
               className="w-full h-[46px] px-4 bg-white text-gray-900 border border-gray-200 rounded-xl focus:border-[#016c45] focus:outline-none focus:ring-1 focus:ring-[#016c45] text-sm placeholder:text-gray-400 transition-colors"
               required
             />
           </div>
 
-          {/* Password Input */}
+    
           <div>
             <label className="block text-sm font-semibold text-gray-800 mb-1.5">
               Password
@@ -56,7 +50,7 @@ export default function LoginPage() {
                 className="w-full h-[46px] pl-4 pr-10 bg-white text-gray-900 border border-gray-200 rounded-xl focus:border-[#016c45] focus:outline-none focus:ring-1 focus:ring-[#016c45] text-sm placeholder:text-gray-400 transition-colors"
                 required
               />
-              {/* Eye Icon - perfectly centered vertically */}
+         
               <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
@@ -66,7 +60,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Remember me & Forgot Password */}
+     
           <div className="flex items-center justify-between mt-1">
             <label className="flex items-center gap-2.5 cursor-pointer">
               <input 
@@ -80,20 +74,20 @@ export default function LoginPage() {
             </a>
           </div>
 
-          {/* Login Button */}
+    
           <button type="submit" className="w-full h-[46px] mt-2 bg-[#016c45] hover:bg-[#015234] text-white font-semibold rounded-xl text-[15px] transition-colors">
             Login
           </button>
         </form>
 
-        {/* Custom Exact Divider */}
+       
         <div className="flex items-center my-6">
           <div className="flex-grow border-t border-gray-200"></div>
           <span className="px-4 text-[13px] font-medium text-gray-500">or continue with</span>
           <div className="flex-grow border-t border-gray-200"></div>
         </div>
 
-        {/* Google Button */}
+   
         <button type="button" className="w-full h-[46px] bg-white hover:bg-gray-50 border border-gray-200 rounded-xl text-[15px] font-semibold text-gray-700 flex items-center justify-center gap-2.5 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-[18px] h-[18px]">
             <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
@@ -104,7 +98,7 @@ export default function LoginPage() {
           Continue with Google
         </button>
 
-        {/* Register Link */}
+      
         <p className="text-center text-[14px] font-medium text-gray-500 mt-6">
           Don't have an account?{" "}
           <Link href="/register" className="font-semibold hover:underline text-[#016c45]">
