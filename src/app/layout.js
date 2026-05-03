@@ -1,4 +1,6 @@
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata = {
   title: "SkillSphere",
@@ -7,10 +9,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // This data-theme line is the magic key that turns on your custom colors
     <html lang="en" data-theme="skillspheretheme">
-      <body className="bg-gray-50 text-gray-900 antialiased">
-        {children}
+      <body className="bg-[#f4fcf8] text-gray-900 antialiased">
+        <AuthProvider>
+          <Navbar />
+
+          <main className="pt-20 min-h-screen">
+            {children}
+          </main>
+        </AuthProvider>
       </body>
     </html>
   );
