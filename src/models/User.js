@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String }, 
   image: { type: String },
+  enrolledCourses: { type: [String], default: [] }, 
 }, { timestamps: true });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);

@@ -27,7 +27,7 @@ export default function CoursesPage() {
       setTimeout(() => {
         setCourses(coursesData);
         setIsLoading(false);
-      }, 1000);
+      }, 500);
     };
     fetchCourses();
   }, []);
