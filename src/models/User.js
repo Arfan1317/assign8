@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String }, 
   image: { type: String },
+  
+  memberSince: { type: Date, default: Date.now }, 
   enrolledCourses: { type: [String], default: [] }, 
 }, { timestamps: true });
 
