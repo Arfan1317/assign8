@@ -33,6 +33,48 @@ export default function EditProfilePage() {
     }
   }, [session, status, router]);
 
+  // 🔥 THE ULTIMATE IMAGE EXTRACTOR & CLEANER 🔥
+  const cleanImageUrl = (url) => {
+    if (!url) return url;
+    let cleanUrl = url;
+
+    // Extractor 1: Clean Google Image Search URLs
+    if (cleanUrl.includes("imgurl=")) {
+      try {
+        const urlObj = new URL(cleanUrl);
+        const extracted = urlObj.searchParams.get("imgurl");
+        if (extracted) cleanUrl = extracted;
+      } catch (err) {}
+    }
+
+    // Extractor 2: Google Drive Bypass (Using Google's Secret LH3 Server)
+    let driveId = null;
+    if (cleanUrl.includes("drive.google.com/file/d/")) {
+      const match = cleanUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (match) driveId = match[1];
+    } else if (cleanUrl.includes("drive.google.com") && cleanUrl.includes("id=")) {
+      const match = cleanUrl.match(/id=([a-zA-Z0-9_-]+)/);
+      if (match) driveId = match[1];
+    }
+
+    if (driveId) {
+      cleanUrl = `https://lh3.googleusercontent.com/d/${driveId}`;
+    }
+
+    // Extractor 3: Imgur Auto-Fixer (Converts album links to direct image links)
+    if (cleanUrl.includes("imgur.com") && !cleanUrl.includes("i.imgur.com") && !cleanUrl.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+      const parts = cleanUrl.split('/');
+      let id = parts[parts.length - 1];
+      if (id === "") id = parts[parts.length - 2]; // handle accidental trailing slashes
+      id = id.split('?')[0]; // remove query parameters if any exist
+      if (id) {
+        cleanUrl = `https://i.imgur.com/${id}.jpg`;
+      }
+    }
+
+    return cleanUrl;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || name.trim() === "") {
@@ -42,25 +84,13 @@ export default function EditProfilePage() {
 
     setIsUpdating(true);
 
-   
-    let finalImageUrl = photoUrl;
-    if (finalImageUrl && finalImageUrl.includes("imgurl=")) {
-      try {
-        const urlObj = new URL(finalImageUrl);
-        const extractedUrl = urlObj.searchParams.get("imgurl");
-        if (extractedUrl) {
-          finalImageUrl = extractedUrl; 
-        }
-      } catch (error) {
-        console.log("Could not extract Google image URL");
-      }
-    }
+    // Run the cleaner one final time before saving to database
+    const finalImageUrl = cleanImageUrl(photoUrl);
 
     try {
       const res = await fetch("/api/profile/update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-       
         body: JSON.stringify({ 
           name: name, 
           image: finalImageUrl 
@@ -70,7 +100,7 @@ export default function EditProfilePage() {
       const data = await res.json();
 
       if (res.ok) {
-        
+        // Tell NextAuth to update the live session cookies
         await update({
           name: name,
           image: finalImageUrl,
@@ -124,7 +154,8 @@ export default function EditProfilePage() {
               
               <div className="flex justify-center mb-6">
                 <img 
-                  src={photoUrl || `https://ui-avatars.com/api/?name=${name || 'User'}&background=016c45&color=fff`} 
+                  // Use the cleaner here to ensure the preview works instantly!
+                  src={cleanImageUrl(photoUrl) || `https://ui-avatars.com/api/?name=${name || 'User'}&background=016c45&color=fff`} 
                   alt="Avatar Preview" 
                   className="w-28 h-28 rounded-full object-cover shadow-sm border-4 border-gray-50"
                   onError={(e) => {
@@ -140,18 +171,9 @@ export default function EditProfilePage() {
                     type="url" 
                     value={photoUrl}
                     onChange={(e) => {
-                      let val = e.target.value;
-                      
-                      if (val.includes("imgurl=")) {
-                        try {
-                          const urlObj = new URL(val);
-                          const extracted = urlObj.searchParams.get("imgurl");
-                          if (extracted) val = extracted;
-                        } catch (err) {
-                         
-                        }
-                      }
-                      setPhotoUrl(val);
+                      // Apply the cleaner instantly so the preview catches broken Imgur/Drive links right away!
+                      const cleanedUrl = cleanImageUrl(e.target.value);
+                      setPhotoUrl(cleanedUrl);
                     }}
                     placeholder="Enter new photo URL" 
                     className="w-full h-[54px] px-6 rounded-xl border border-gray-200 bg-white text-[15px] placeholder-gray-400 focus:border-[#016c45] focus:ring-0 transition-colors"

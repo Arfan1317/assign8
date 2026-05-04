@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+assign8/
+├── src/
+│   ├── app/
+│   │   ├── api/            # Backend API routes
+│   │   ├── profile/        # User Profile Dashboard & Edit pages
+│   │   ├── courses/        # Course catalog and details
+│   │   └── layout.jsx      # Root application layout
+│   ├── data/
+│   │   └── courses.json    # Local JSON data for course rendering
+│   └── lib/
+│       └── authOptions.js  # NextAuth server configuration and callbacks
+├── public/                 # Static assets
+├── tailwind.config.Brother, my absolute apologies! You are 100% right to call me out. I completely misunderstood that last message and handed you the `page.jsx` file again instead of the updated `README.md` file you actually asked for. That is my mistake. 
 
-## Getting Started
+Here is the exact, finalized **`README.md`** code. It has your live Vercel link, your exact GitHub repository, and correctly lists **NextAuth.js** as your authentication engine.
 
-First, run the development server:
+Hover over the top right of this block, click **Copy**, and paste it straight into your GitHub!
+```markdown
+# 🌐 SkillSphere
 
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![NextAuth](https://img.shields.io/badge/NextAuth.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=14b8a6)
+
+SkillSphere is a modern, responsive learning management web application designed to track student progress, manage enrolled courses, and provide a seamless, personalized user profile experience. 
+
+### 🚀 **[View Live Demo on Vercel](https://skillsphere-8.vercel.app/)**
+
+## ✨ Key Features
+
+* **🔐 Secure Authentication:** Seamless user login, registration, and session management powered by NextAuth.js.
+* **🎓 Course Management:** Users can view their active enrollments, course ratings, and categories via a beautifully designed dashboard.
+* **👤 Dynamic User Profiles:** Fully editable user profiles featuring live-updating avatars, fallback UI-Avatar integration, and persistent database storage.
+* **🧠 Smart Image Parsing Engine:** Features a custom-built URL extractor that automatically sanitizes and bypasses strict image hosting protocols:
+  * Automatically extracts raw image files from massive Google Image Search links.
+  * Utilizes Google's hidden `lh3` server API to bypass strict Google Drive CORS restrictions for profile pictures.
+  * Auto-corrects Imgur album links into direct `.jpg` rendering links.
+* **📱 Fully Responsive UI:** Built with a mobile-first approach using Tailwind CSS and DaisyUI, ensuring the platform looks perfect on any device.
+* **🔔 Real-time Feedback:** Integrated `react-toastify` for instant, elegant user notifications during database updates.
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+* [Next.js](https://nextjs.org/) (App Router)
+* [React](https://reactjs.org/)
+* [Tailwind CSS](https://tailwindcss.com/)
+* [DaisyUI](https://daisyui.com/)
+
+**Backend & Database:**
+* [NextAuth.js](https://next-auth.js.org/) (Authentication & Session Management)
+* [MongoDB](https://www.mongodb.com/) (Atlas Cluster for User Data)
+* Next.js API Routes (RESTful endpoints)
+
+**Utilities:**
+* `react-toastify` (Toasts & Notifications)
+* UI-Avatars API (Fallback Profile Generators)
+
+## 🚀 Getting Started
+
+To run this project locally on your machine, follow these steps:
+
+### 1. Clone the repository
 ```bash
+git clone https://github.com/Arfan1317/assign8.git
+cd assign8
+
+2. Install dependencies
+Bash
+
+npm install
+
+3. Set up Environment Variables
+
+Create a .env or .env.local file in the root directory and add your secret keys:
+Code snippet
+
+# Database Connection
+MONGODB_URI=your_mongodb_connection_string
+
+# NextAuth Configuration
+NEXTAUTH_SECRET=your_super_secret_string
+NEXTAUTH_URL=http://localhost:3000
+
+4. Run the development server
+Bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 with your browser to see the live result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+📝 License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open-source and available under the MIT License.
