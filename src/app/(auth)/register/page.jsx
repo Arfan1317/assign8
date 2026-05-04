@@ -43,7 +43,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center bg-[#fafafa] p-4 py-8 ${inter.className}`}>
+    <div className={`absolute top-0 left-0 w-full min-h-screen flex items-center justify-center bg-[#fafafa] p-4 py-8 z-50 ${inter.className}`}>
       <div className="max-w-md w-full bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 border border-gray-100">
         <div className="flex items-center gap-2 mb-6">
           <img src="/asset/logofooter.png" alt="SkillSphere Logo" className="w-8 h-8 rounded-md" />

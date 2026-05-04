@@ -33,6 +33,31 @@ export const authOptions = {
       },
     }),
   ],
+  
+  callbacks: {
+  
+    async jwt({ token, user, trigger, session }) {
+     
+      if (user) {
+        token.image = user.image;
+        token.name = user.name; 
+      }
+    
+      if (trigger === "update" && session) {
+        token.image = session.image;
+        token.name = session.name;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.image = token.image;
+        session.user.name = token.name;
+      }
+      return session;
+    }
+  },
+
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
   pages: { signIn: "/login" },

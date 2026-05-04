@@ -9,13 +9,16 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  if (pathname === "/login" || pathname === "/register") {
+    return null;
+  }
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Courses", path: "/courses" },
     { name: "My Profile", path: "/profile" },
   ];
 
-  
   const closeMenu = () => setIsMobileMenuOpen(false);
 
   return (

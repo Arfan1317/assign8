@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 const BackIcon = () => (
   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
 );
@@ -19,13 +18,11 @@ export default function EditProfilePage() {
   const { data: session, status, update } = useSession();
   const router = useRouter();
   
-  
   const [name, setName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-  
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
       setName(session.user.name || "");
@@ -36,7 +33,6 @@ export default function EditProfilePage() {
     }
   }, [session, status, router]);
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || name.trim() === "") {
@@ -46,27 +42,41 @@ export default function EditProfilePage() {
 
     setIsUpdating(true);
 
+   
+    let finalImageUrl = photoUrl;
+    if (finalImageUrl && finalImageUrl.includes("imgurl=")) {
+      try {
+        const urlObj = new URL(finalImageUrl);
+        const extractedUrl = urlObj.searchParams.get("imgurl");
+        if (extractedUrl) {
+          finalImageUrl = extractedUrl; 
+        }
+      } catch (error) {
+        console.log("Could not extract Google image URL");
+      }
+    }
+
     try {
       const res = await fetch("/api/profile/update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+       
         body: JSON.stringify({ 
           name: name, 
-          image: photoUrl 
+          image: finalImageUrl 
         }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-       
+        
         await update({
           name: name,
-          image: photoUrl,
+          image: finalImageUrl,
         });
 
-        toast.success("Profile updated successfully permanently!");
-        
+        toast.success("Profile updated successfully!");
         setTimeout(() => router.push("/profile"), 1000); 
       } else {
         toast.error(data.message || "Failed to update profile.");
@@ -78,7 +88,6 @@ export default function EditProfilePage() {
     }
   };
 
-  
   if (isLoadingData || status === "loading") {
     return (
       <div className={`min-h-screen bg-[#f8fafc] flex justify-center items-center ${inter.className}`}>
@@ -91,14 +100,8 @@ export default function EditProfilePage() {
   }
 
   return (
-    
     <div className={`min-h-screen bg-[#f8fafc] text-gray-900 antialiased ${inter.className}`}>
-      
-    
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24">
-        
-
-
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-3xl p-12 shadow-[0_4px_20px_rgb(0,0,0,0.02)] border border-gray-100">
             
@@ -119,13 +122,37 @@ export default function EditProfilePage() {
 
             <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
               
+              <div className="flex justify-center mb-6">
+                <img 
+                  src={photoUrl || `https://ui-avatars.com/api/?name=${name || 'User'}&background=016c45&color=fff`} 
+                  alt="Avatar Preview" 
+                  className="w-28 h-28 rounded-full object-cover shadow-sm border-4 border-gray-50"
+                  onError={(e) => {
+                    e.target.src = `https://ui-avatars.com/api/?name=${name || 'User'}&background=016c45&color=fff`;
+                  }}
+                />
+              </div>
+
               <div className="space-y-2.5">
                 <label className="text-[15px] font-bold text-gray-900">Photo URL</label>
                 <div className="relative">
                   <input 
                     type="url" 
                     value={photoUrl}
-                    onChange={(e) => setPhotoUrl(e.target.value)}
+                    onChange={(e) => {
+                      let val = e.target.value;
+                      
+                      if (val.includes("imgurl=")) {
+                        try {
+                          const urlObj = new URL(val);
+                          const extracted = urlObj.searchParams.get("imgurl");
+                          if (extracted) val = extracted;
+                        } catch (err) {
+                         
+                        }
+                      }
+                      setPhotoUrl(val);
+                    }}
                     placeholder="Enter new photo URL" 
                     className="w-full h-[54px] px-6 rounded-xl border border-gray-200 bg-white text-[15px] placeholder-gray-400 focus:border-[#016c45] focus:ring-0 transition-colors"
                   />
@@ -151,24 +178,13 @@ export default function EditProfilePage() {
                   disabled={isUpdating}
                   className={`w-full h-[56px] bg-[#016c45] hover:bg-[#015234] text-white font-bold rounded-xl text-[16px] shadow-md transition-colors flex items-center justify-center gap-2 ${isUpdating ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
-                  {isUpdating ? (
-                    <>
-                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Permanently Updating...
-                    </>
-                  ) : (
-                    "Update Information"
-                  )}
+                  {isUpdating ? "Permanently Updating..." : "Update Information"}
                 </button>
               </div>
 
             </form>
           </div>
         </div>
-
       </main>
     </div>
   );

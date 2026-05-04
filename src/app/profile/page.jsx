@@ -99,11 +99,18 @@ export default function UserProfilePage() {
           <div className="space-y-8 lg:sticky lg:top-28 lg:self-start">
             <div className="bg-white rounded-3xl p-10 flex flex-col items-center text-center shadow-[0_4px_20px_rgb(0,0,0,0.02)] border border-gray-100">
               <div className="w-40 h-40 rounded-full overflow-hidden mb-6 bg-gray-100 border-4 border-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] relative flex items-center justify-center">
+                
+                {/* ✅ THE FIX: Bulletproof Image Tag with themed fallback! */}
                 <img 
-                  src={userProfile.image || "https://ui-avatars.com/api/?name=" + userProfile.name} 
+                  src={userProfile.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(userProfile.name)}&background=016c45&color=fff`} 
                   alt={userProfile.name} 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null; // Prevents looping if fallback also fails
+                    e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userProfile.name)}&background=016c45&color=fff`;
+                  }}
                 />
+
               </div>
 
               <h3 className="text-2xl font-bold text-gray-900 leading-tight mb-2 truncate max-w-full">
