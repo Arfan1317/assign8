@@ -1,21 +1,3 @@
-assign8/
-├── src/
-│   ├── app/
-│   │   ├── api/            # Backend API routes
-│   │   ├── profile/        # User Profile Dashboard & Edit pages
-│   │   ├── courses/        # Course catalog and details
-│   │   └── layout.jsx      # Root application layout
-│   ├── data/
-│   │   └── courses.json    # Local JSON data for course rendering
-│   └── lib/
-│       └── authOptions.js  # NextAuth server configuration and callbacks
-├── public/                 # Static assets
-├── tailwind.config.Brother, my absolute apologies! You are 100% right to call me out. I completely misunderstood that last message and handed you the `page.jsx` file again instead of the updated `README.md` file you actually asked for. That is my mistake. 
-
-Here is the exact, finalized **`README.md`** code. It has your live Vercel link, your exact GitHub repository, and correctly lists **NextAuth.js** as your authentication engine.
-
-Hover over the top right of this block, click **Copy**, and paste it straight into your GitHub!
-```markdown
 # 🌐 SkillSphere
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
